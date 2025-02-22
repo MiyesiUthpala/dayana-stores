@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.math.BigDecimal;
+
 @Entity
 public class Employee {
     @Id
@@ -13,6 +15,24 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String category;
+
+    private String email;
+
+    private String address;
+
+    private String phoneNumber;
+
+    private Integer age;
+
+    private String nic;
+
+    private BigDecimal basicSalary;
+
+    private String jobRole;
+
+
+
+
 
     public void setId(Long id) {
         this.id = id;
@@ -44,5 +64,61 @@ public class Employee {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Integer getAge() {
+        return (age != null) ? age : 0; // or some other default value
+    }
+    public void setAge(Integer age) {
+
+        this.age = age;
+    }
+    public String getNic() {
+        return nic;
+    }
+
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
+
+    public BigDecimal getBasicSalary() {
+        return basicSalary;
+    }
+
+    public void setBasicSalary(BigDecimal basicSalary) {
+        this.basicSalary = basicSalary;
+    }
+
+    public String getJobRole() {
+        return jobRole;
+    }
+
+    public void setJobRole(String jobRole) {
+        this.jobRole = jobRole;
     }
 }
