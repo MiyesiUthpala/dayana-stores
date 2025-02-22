@@ -21,7 +21,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartItem addToCart(Long productId, int quantity) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new RuntimeException("Product not found " + productId));
 
         CartItem cartItem = new CartItem();
         cartItem.setProduct(product);
@@ -33,7 +33,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void updateCartItem(Long id, int quantity) {
         CartItem cartItem = cartItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cart item not found"));
+                .orElseThrow(() -> new RuntimeException("Cart item not found " + id));
 
         cartItem.setQuantity(quantity);
         cartItemRepository.save(cartItem);

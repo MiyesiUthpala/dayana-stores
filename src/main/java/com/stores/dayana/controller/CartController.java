@@ -18,7 +18,7 @@ public class CartController {
         return cartService.addToCart(productId, quantity);
     }
 
-    @PutMapping("/update/{id}")
+    @PatchMapping("/update/{id}")
     public void updateCart(@PathVariable Long id, @RequestParam int quantity) {
         cartService.updateCartItem(id, quantity);
     }

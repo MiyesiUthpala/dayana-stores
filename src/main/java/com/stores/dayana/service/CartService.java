@@ -8,5 +8,5 @@ public interface CartService {
     CartItem addToCart(Long productId, int quantity);
     void updateCartItem(Long id, int quantity);
     void removeCartItem(Long id);
-    List<CartItem> getAllCartItems(); // Add this method to fix the error
+    List<CartItem> getAllCartItems();
 }
