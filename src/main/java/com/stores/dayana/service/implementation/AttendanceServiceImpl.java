@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -19,7 +20,19 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Attendance markAttendance(Attendance attendance) {
-        return attendanceRepository.save(attendance);
+//        return attendanceRepository.save(attendance);
+        Optional<Attendance> existingAttendance = attendanceRepository
+                .findByEmployeeIdAndDate(attendance.getEmployeeId().getId(), attendance.getDate());
+
+        if (existingAttendance.isPresent()) {
+            // If attendance exists, update the status
+            Attendance existing = existingAttendance.get();
+            existing.setStatus(attendance.getStatus()); // Assuming status is the field to be updated
+            return attendanceRepository.save(existing); // Save updated attendance
+        } else {
+            // If no attendance exists, save the new attendance
+            return attendanceRepository.save(attendance);
+        }
     }
 
     @Override

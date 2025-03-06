@@ -1,9 +1,6 @@
 package com.stores.dayana.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -30,9 +27,22 @@ public class Employee {
 
     private String jobRole;
 
+    @Transient
+    private int attendanceCount;
+
+    @Transient
+    private int leaveCount;
+    @Transient
+    private String attendanceStatus;
 
 
+    public String getAttendanceStatus() {
+        return attendanceStatus;
+    }
 
+    public void setAttendanceStatus(String attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -120,5 +130,21 @@ public class Employee {
 
     public void setJobRole(String jobRole) {
         this.jobRole = jobRole;
+    }
+
+    public int getAttendanceCount() {
+        return attendanceCount;
+    }
+
+    public void setAttendanceCount(int attendanceCount) {
+        this.attendanceCount = attendanceCount;
+    }
+
+    public int getLeaveCount() {
+        return leaveCount;
+    }
+
+    public void setLeaveCount(int leaveCount) {
+        this.leaveCount = leaveCount;
     }
 }

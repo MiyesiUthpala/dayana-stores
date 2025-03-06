@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
@@ -37,4 +38,18 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
     @Transactional
     @Query("DELETE FROM Attendance a WHERE a.employee.id = :employeeId")
     void deleteByEmployeeId(@Param("employeeId") Long employeeId);
+
+
+    @Query("SELECT COUNT(a) FROM Attendance a WHERE a.employee.id = :employeeId AND a.status = :status AND MONTH(a.date) = :month AND YEAR(a.date) = :year")
+    int countByEmployeeIdAndStatusAndMonthYear(Long employeeId, String status, int month, int year);
+
+    @Query("SELECT COUNT(a) FROM Attendance a WHERE a.employee.id = :employeeId AND a.status = :status AND YEAR(a.date) = :year")
+    int countByEmployeeIdAndStatusAndYear(Long employeeId, String status, int year);
+
+    @Query("SELECT a.status FROM Attendance a WHERE a.employee.id = :employeeId AND a.date = :today")
+    Optional<String> getAttendanceStatus(@Param("employeeId") Long employeeId, @Param("today") LocalDate today);
+
+    @Query("SELECT a FROM Attendance a WHERE a.employee.id = :employeeId AND a.date = :date")
+    Optional<Attendance> findByEmployeeIdAndDate(@Param("employeeId") Long employeeId, @Param("date") LocalDate date);
+
 }
