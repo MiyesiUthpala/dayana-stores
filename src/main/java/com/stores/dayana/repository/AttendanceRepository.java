@@ -3,9 +3,11 @@ package com.stores.dayana.repository;
 import com.stores.dayana.dto.EmployeeAttendanceProjection;
 import com.stores.dayana.entity.Attendance;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,4 +33,8 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
     """, nativeQuery = true)
     List<EmployeeAttendanceProjection> getEmployeeAttendance(@Param("month") LocalDate date);
 
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Attendance a WHERE a.employee.id = :employeeId")
+    void deleteByEmployeeId(@Param("employeeId") Long employeeId);
 }

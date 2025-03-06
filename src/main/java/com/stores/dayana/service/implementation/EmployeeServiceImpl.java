@@ -1,8 +1,10 @@
 package com.stores.dayana.service.implementation;
 
 import com.stores.dayana.entity.Employee;
+import com.stores.dayana.repository.AttendanceRepository;
 import com.stores.dayana.repository.EmployeeRepository;
 import com.stores.dayana.service.EmployeeService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private AttendanceRepository attendanceRepository;
 
     @Override
     public List<Employee> getEmployeeList() {
@@ -30,7 +35,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public void deleteEmployee(Long id) {
+        attendanceRepository.deleteByEmployeeId(id);
         employeeRepository.deleteById(id);
     }
 }
