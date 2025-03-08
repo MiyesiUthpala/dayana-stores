@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -29,9 +30,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // Map the employee list to include attendance and leave counts
         return employees.stream().map(employee -> {
-            employee.setAttendanceCount(getAttendanceCount(employee.getId()));
+            int attendanceCount = getAttendanceCount(employee.getId());
+            employee.setAttendanceCount(attendanceCount);
             employee.setLeaveCount(getLeaveCount(employee.getId()));
             employee.setAttendanceStatus(getAttendanceStatus(employee.getId()));
+            employee.setMonthlySalary(employee.getBasicSalary() == null ? BigDecimal.valueOf(0) : employee.getBasicSalary()
+                    .multiply(BigDecimal.valueOf(attendanceCount < 1 ? 0 : attendanceCount)));
             return employee;
         }).collect(Collectors.toList());
     }

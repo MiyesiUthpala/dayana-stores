@@ -35,6 +35,7 @@ public class Employee {
     @Transient
     private String attendanceStatus;
 
+    private BigDecimal monthlySalary;
 
     public String getAttendanceStatus() {
         return attendanceStatus;
@@ -146,5 +147,13 @@ public class Employee {
 
     public void setLeaveCount(int leaveCount) {
         this.leaveCount = leaveCount;
+    }
+
+    public BigDecimal getMonthlySalary() {
+        return monthlySalary;
+    }
+
+    public void setMonthlySalary(BigDecimal monthlySalary) {
+        this.monthlySalary = monthlySalary;
     }
 }
