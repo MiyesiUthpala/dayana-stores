@@ -1,9 +1,13 @@
 package com.stores.dayana.controller;
 
 
+import com.stores.dayana.dto.ExpiredItemsDto;
 import com.stores.dayana.dto.InventoryDto;
+import com.stores.dayana.dto.LowStockItemDto;
+import com.stores.dayana.dto.StockWorthDto;
 import com.stores.dayana.service.InventoryService;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +31,7 @@ public class InventoryController {
     private InventoryService inventoryService;
     private final Environment environment;
 
-    /** API to add new item **/
+    /** API TO ADD NEW ITEM **/
     @PostMapping("/add-item")
     public ResponseEntity<?> addNewItem(@RequestBody InventoryDto inventoryDto)
     {
@@ -36,7 +40,8 @@ public class InventoryController {
 
     }
 
-    /** API to upload the product image to the /product-images folder and save the stored path in the database**/
+    /** API TO UPLOAD THE PRODUCT IMAGE TO THE /PRODUCT-IMAGES FOLDER AND RETURN THE SAVED PATH TO FRONTEND WHICH WILL LATER
+     * BE DENT TO BE STORED FROM THE FRONTEND **/
     @PostMapping("/upload-image")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
         // Define folder where images will be stored
@@ -61,6 +66,7 @@ public class InventoryController {
         return ResponseEntity.ok(imageUrl);
     }
 
+    /** API FOR RETRIEVING ALL ITEMS **/
     @GetMapping("/all-items")
     public ResponseEntity<List<InventoryDto>> getAllOrders()
     {
@@ -68,7 +74,7 @@ public class InventoryController {
         return ResponseEntity.ok(allOrders);
     }
 
-    /** API to delete a given image using the image path**/
+    /** API TO DELETE A GIVEN IMAGE USING THE IMAGE PATH, USED FOR THE REMOVE BUTTON IN ITEM ADDING FORM**/
     @DeleteMapping("/delete-image")
     public ResponseEntity<String> deleteImage(@RequestBody Map<String, String> request) {
         String imagePath = request.get("imagePath"); // Extract imagePath from request body
@@ -92,12 +98,12 @@ public class InventoryController {
         }
     }
 
-    /** API to delete a given item using the id sent as a variable in the path**/
+    /** API TO DELETE A GIVEN ITEM USING THE ID SENT AS A VARIABLE IN THE PATH**/
     @DeleteMapping("/delete-item/{deleteItemId}")
     public ResponseEntity<String> deleteImage(@PathVariable("deleteItemId") int id) {
 
         // Retrieve the image path from the database
-        String imagePath = inventoryService.get_image_path_by_id(id); // Implement this in service
+        String imagePath = inventoryService.get_image_path_by_id(id);
 
         if (imagePath != null) {
             try {
@@ -114,4 +120,33 @@ public class InventoryController {
 
     }
 
+    /** API FOR EDITING/UPDATING AN ITEM INFO **/
+    @PutMapping("/edit-item")
+    public ResponseEntity<?> updateItem(@RequestBody InventoryDto updatedItem){
+
+        InventoryDto editedItem=inventoryService.update_item(updatedItem);
+        return ResponseEntity.ok(editedItem);
+    }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<?> getStatistics(){
+        return ResponseEntity.ok(inventoryService.get_statistics());
+
+    }
+
+    @GetMapping("/low-stock")
+    public List<LowStockItemDto> getLowStockItems() {
+        return inventoryService.get_low_stock_items();
+    }
+
+    @GetMapping("/expired")
+    public ResponseEntity<List<ExpiredItemsDto>> getExpiredItems() {
+        List<ExpiredItemsDto> expiredItems = inventoryService.get_expired_items();
+        return ResponseEntity.ok(expiredItems);
+    }
+
+    @GetMapping("/stock-worth")
+    public List<StockWorthDto> getStockWorth() {
+        return inventoryService.get_stock_worth();
+    }
 }

@@ -72,13 +72,26 @@ public class Item {
         String text = dateTime.format(formatter);
         this.item_added_on = LocalDateTime.parse(text, formatter);
         this.last_updated = LocalDateTime.parse(text, formatter); // Auto-set on creation
+        this.status=calculateStockStatus();
+
     }
 
     @PreUpdate
     public void setLastUpdated() {
-        LocalDate date = LocalDate.now();
+        LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm:ss");
-        String text = date.format(formatter);
+        String text = dateTime.format(formatter);
         this.last_updated = LocalDateTime.parse(text, formatter);
+        this.status=calculateStockStatus();
+    }
+
+
+    // Status calculation logic inside the entity
+    private String calculateStockStatus() {
+        if (current_qty > Math.round((float) max_qty / 2) && current_qty <= max_qty) return "Available";
+        if (current_qty > reorder_level && current_qty <= Math.round((float) max_qty / 2)) return "Moderate";
+        if (current_qty > 0 && current_qty <= reorder_level) return "Low";
+        if (current_qty == 0) return "Out of Stock";
+        return "Unknown"; // Fallback case
     }
 }

@@ -1,7 +1,14 @@
 package com.stores.dayana.mapper;
 
+import com.stores.dayana.dto.ExpiredItemsDto;
 import com.stores.dayana.dto.InventoryDto;
+import com.stores.dayana.dto.LowStockItemDto;
+import com.stores.dayana.dto.StockWorthDto;
 import com.stores.dayana.entity.Item;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class InventoryMapper {
 
@@ -46,6 +53,33 @@ public class InventoryMapper {
     }
 
 
+    public static LowStockItemDto mapToLowStockItemDto(Item item){
+
+        return new LowStockItemDto(
+                item.getItem_id(),
+                item.getItem_name(),
+                item.getItem_image(),
+                item.getCategory(),
+                item.getCurrent_qty(),
+                item.getReorder_level(),
+                (item.getMax_qty() - item.getCurrent_qty())
+        );
+    }
+
+    public static ExpiredItemsDto mapToExpiredItemDto(Item item) {
+        long daysSinceExpired = ChronoUnit.DAYS.between(item.getExpiration_date(), LocalDate.now());
+        // Convert int to BigDecimal before multiplication
+        BigDecimal remainingStock = BigDecimal.valueOf(item.getCurrent_qty());
+        BigDecimal potentialLoss = remainingStock.multiply(item.getUnit_price());
+        return new ExpiredItemsDto(
+                item.getItem_id(),
+                item.getItem_name(),
+                item.getItem_image(),
+                item.getExpiration_date(),
+                daysSinceExpired,
+                potentialLoss.doubleValue()
+        );
+    }
 
 
 }
