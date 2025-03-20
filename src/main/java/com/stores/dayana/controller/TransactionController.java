@@ -1,5 +1,6 @@
 package com.stores.dayana.controller;
 
+import com.stores.dayana.entity.Supplier;
 import com.stores.dayana.entity.Transaction;
 import com.stores.dayana.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class TransactionController {
     public ResponseEntity<List<Transaction>> getAllTransactions() {
         return ResponseEntity.ok(transactionRepository.findAll());
     }
+
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id) {
