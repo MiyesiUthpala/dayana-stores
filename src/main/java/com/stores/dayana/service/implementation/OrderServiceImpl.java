@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
     @Autowired
     private OrderRepository orderRepository;
 
@@ -29,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         double totalAmount = cartItems.stream()
-                .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity())
+                .mapToDouble(item -> item.getItem().getUnit_price().doubleValue() * item.getQuantity())
                 .sum();
 
         Order order = new Order();
@@ -43,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
         order.setItems(orderItems);
 
         orderRepository.save(order);
-        cartItemRepository.deleteAll(); // Clear cart after order
+        cartItemRepository.deleteAll(); // Clear cart after placing the order
 
         return order;
     }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/cart")
 public class CartController {
@@ -18,9 +19,9 @@ public class CartController {
         return cartService.addToCart(productId, quantity);
     }
 
-    @PatchMapping("/update/{id}")
-    public void updateCart(@PathVariable Long id, @RequestParam int quantity) {
-        cartService.updateCartItem(id, quantity);
+    @PatchMapping("/update/{itemId}")
+    public void updateCart(@PathVariable Long itemId, @RequestParam int quantity) {
+        cartService.updateCartItem(itemId, quantity);
     }
 
     @DeleteMapping("/remove/{id}")
