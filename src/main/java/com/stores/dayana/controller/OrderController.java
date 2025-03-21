@@ -5,6 +5,7 @@ import com.stores.dayana.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/order")
 public class OrderController {

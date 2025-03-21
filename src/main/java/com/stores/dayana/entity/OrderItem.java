@@ -1,40 +1,39 @@
 package com.stores.dayana.entity;
 
 import jakarta.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "orders_items")
-public class OrderItem implements Serializable {
+public class OrderItem {
 
-    @EmbeddedId
-    private OrderItemId id = new OrderItemId();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne
-    @MapsId("orderId") // Maps the orderId field in OrderItemId
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private Order order;
 
-    @ManyToOne
-    @MapsId("cartItemId") // Maps the cartItemId field in OrderItemId
-    @JoinColumn(name = "cart_item_id")
-    private CartItem cartItem;
+    private Long itemId;
+    private String itemName;
+    private int quantity;
+    private double unitPrice;
 
+    // Constructors
     public OrderItem() {}
 
-    public OrderItem(Order order, CartItem cartItem) {
-        this.order = order;
-        this.cartItem = cartItem;
-        this.id = new OrderItemId(order.getId(), cartItem.getId());
+    public OrderItem(Long itemId, String itemName, int quantity, double unitPrice) {
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
     }
 
-    public OrderItemId getId() {
+    // Getters and Setters
+    public Long getId() {
         return id;
-    }
-
-    public void setId(OrderItemId id) {
-        this.id = id;
     }
 
     public Order getOrder() {
@@ -45,11 +44,35 @@ public class OrderItem implements Serializable {
         this.order = order;
     }
 
-    public CartItem getCartItem() {
-        return cartItem;
+    public Long getItemId() {
+        return itemId;
     }
 
-    public void setCartItem(CartItem cartItem) {
-        this.cartItem = cartItem;
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
     }
 }
