@@ -1,4 +1,4 @@
-package com.stores.dayana;
+package com.stores.dayana.config;
 
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.context.annotation.Configuration;

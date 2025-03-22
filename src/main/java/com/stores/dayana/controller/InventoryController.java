@@ -25,7 +25,7 @@ import java.util.Map;
 @CrossOrigin(origins="*")
 @AllArgsConstructor
 @RestController
-@RequestMapping("/inventory")
+@RequestMapping("/admin/inventory")
 public class InventoryController {
 
     private InventoryService inventoryService;
