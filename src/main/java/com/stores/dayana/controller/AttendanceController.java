@@ -11,9 +11,9 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/attendance")
+@RequestMapping("/admin/attendance")
 public class AttendanceController {
 
     @Autowired
