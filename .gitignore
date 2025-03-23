@@ -3,7 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+product_images/
 ### STS ###
 .apt_generated
 .classpath
@@ -32,4 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
+<<<<<<< HEAD
 
+=======
+application.properties
+>>>>>>> 450d583200bd17c18187e406696d70691daf38db
