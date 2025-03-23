@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/suppliers")
+@RequestMapping("/admin/suppliers")
 @CrossOrigin(origins = "http://localhost:3000") // Adjust as needed
 public class SupplierController {
 
