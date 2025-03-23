@@ -1,9 +1,8 @@
 package com.stores.dayana.controller;
 
-<<<<<<< HEAD
-=======
+
 import com.stores.dayana.entity.Supplier;
->>>>>>> 06b7abce1f6d021573244c0a180d22a9ebe84a4d
+
 import com.stores.dayana.entity.Transaction;
 import com.stores.dayana.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +31,7 @@ public class TransactionController {
         return ResponseEntity.ok(transactionRepository.findAll());
     }
 
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> 06b7abce1f6d021573244c0a180d22a9ebe84a4d
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id) {
         return ResponseEntity.ok(transactionRepository.findById(id).orElse(null));
