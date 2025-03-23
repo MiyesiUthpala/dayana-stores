@@ -9,7 +9,7 @@ import java.util.List;
 
 @CrossOrigin(origins="*")
 @RestController
-@RequestMapping("/admin/cart")
+@RequestMapping("/user/cart")
 public class CartController {
     @Autowired
     private CartService cartService;

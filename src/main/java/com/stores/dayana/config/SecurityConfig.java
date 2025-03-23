@@ -33,7 +33,9 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable) // Turn off CSRF (not needed for API)
                 .cors(Customizer.withDefaults()) // Enable CORS (to allow requests from other domains)
                 // Secure different parts of the app
-                .authorizeHttpRequests(request -> request.requestMatchers("/auth/**", "/public/**","/images/**").permitAll() // Public Paths
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/auth/**", "/public/**","/images/**").permitAll() // Public Paths
+                        .requestMatchers("/admin/inventory/all-items").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN") // Admin-only paths
                         .requestMatchers("/user/**").hasAnyAuthority("USER") // User-only paths
                         .requestMatchers("/adminuser/**").hasAnyAuthority("ADMIN", "USER") // Both role can access
